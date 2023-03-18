@@ -1,0 +1,44 @@
+<div class="Container">
+    <div class="row">
+      <div class="col-lg-12">
+        <div class="table-responsive">
+          <table class="table table-stripped text-center">
+           
+            <thead>
+             
+              <tr class="table-dark">
+                
+                <th>Name</th>
+                <th>Place</th>
+                <th>image</th>
+                <th>Edit</th>
+                <th>Delete</th>
+                
+              </tr>
+            </thead>
+            
+            <tbody>
+              <% result.forEach(element => { %>
+                
+             
+              <tr>
+                
+                <td><%=element.busname%></td>
+                <td><%=element.place%></td>
+                <td><img src="/../<%=element.image %>" alt=""></td>
+                <td><a href="/edit/<%=element._id%>" class="text-sucess"><i class="fa-solid fa-pen-to-square"></i></a></td>
+                 <td><a href="/delete/<%=element._id %>" class="text-danger"><i class="fa-solid fa-trash"></i></a></td>
+                
+              
+                
+              </tr>
+           <% }) %>
+            </tbody>
+  
+          </table>
+        </div>
+      </div>
+    </div>
+  
+  </div>
+  
