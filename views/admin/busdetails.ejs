@@ -18,16 +18,16 @@
             </thead>
             
             <tbody>
-              <% result.forEach(element => { %>   edwee
+              <% result.forEach(element => { %>
                 
              
               <tr>
                 
                 <td><%=element.busname%></td>
                 <td><%=element.place%></td>
-                <td><img src="/../<%=element.image %>" alt=""></td>
-                <td><a href="/edit/<%=element._id%>" class="text-sucess"><i class="fa-solid fa-pen-to-square"></i></a></td>
-                 <td><a href="/delete/<%=element._id %>" class="text-danger"><i class="fa-solid fa-trash"></i></a></td>
+                <td><img src="/images/<%=element.image %>" alt=""></td>
+                <td><a href="/admin/editbus/<%=element._id%>" class="text-sucess"><i class="fa-solid fa-pen-to-square"></i></a></td>
+                 <td><a href="/admin/deletebus/<%=element._id %>" class="text-danger"><i class="fa-solid fa-trash"></i></a></td>
                 
               
                 

@@ -13,6 +13,7 @@ const Admindata= require('./models/adminmodel');
 const session=require('express-session')
 
 
+
 const app=express()
 
 app.set("view engine","ejs")
@@ -21,6 +22,9 @@ app.set('layout','layouts/layout')
 app.use(bodyParser.urlencoded({ extended: false}));
 app.use(layoutexpress)
 app.use(express.static('public'))
+app.use(express.static('public/images/bus-pictures'))
+app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static('public/images/uploads'))
 app.use(session({
     secret: "thisismysecrctekeyfhrgfgrfrty84fwir767",
     saveUninitialized:true,

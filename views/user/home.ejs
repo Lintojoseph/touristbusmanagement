@@ -63,18 +63,26 @@
           <div class="subject-card-header p-4">
             <a href="#" class="card_title p-lg-4d-block">
               <div class="row align-items-center">
+                
                 <div class="col-sm-5 subject-img">
-                  <img src="<%el.image %>" class="img-fluid" alt="">
+                  <img src="/public/images/bus-pictures/<%=el.mainimage  %> %>" class="img-fluid" alt="">
                 </div>
+                <% el.mainimage.forEach(function(image) { %>
+                  <img src="<%= image %>" alt="product image">
+                <% }); %>
+              
+
+             
                 <div class="col-sm-7 subject-content mt-sm-0 mt-4">
-                  <h4><%el.name %></h4>
+                  <h4><%=el.busname %></h4>
                   <!--<p>3Days, 4 Nights</p>-->
                   <div class="dst-btm">
                     <h6 class=""> Place </h6>
                     <span><%=el.place%></span>
                   </div>
                   <!-- <button type="button" class="btn btn-danger">View</button> -->
-                  <a href="/login" class="btn btn-danger">View</a>
+                  
+                  <a href="/view/<%=el.id%>" class="btn btn-danger">View</a>
                 </div>
               </div>
             </a>

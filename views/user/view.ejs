@@ -1,8 +1,8 @@
 <header id="site-header" class="fixed-top">
     <div class="container">
       <nav class="navbar navbar-expand-lg stroke">
-        <h1><a class="navbar-brand mr-lg-5" href="">
-            Komban
+        <h1><a class="navbar-brand mr-lg-5"  href="">
+          <%= result.busname %>
           </a></h1>
         <!-- if logo is image enable this   
       <a class="navbar-brand" href="#index.html">
@@ -61,8 +61,8 @@
     <!--<div class="breadcrumb-bg breadcrumb-bg-about py-sm-5 py-4">
       <div class="container py-2">-->
         <div class="bg-image p-5 text-center shadow-1-strong rounded mb-5 text-white">
-            <img src="images/lumiere.jpg" style="width: 20%; height: 20%;" class="img-fluid" alt="">
-        <h2 class="title">Welcome to Komban's world</h2>
+            <!--<img src="images/lumiere.jpg" style="width: 50%; height: 10%;" class="img-fluid" alt="">-->
+        <h2 class="title"><%=result.title%></h2>
         <!--<ul class="breadcrumbs-custom-path mt-2">
           <li><a href="#url">Home</a></li>
           <li class="active"><span class="fa fa-arrow-right mx-2" aria-hidden="true"></span> About </li>
@@ -73,14 +73,13 @@
   </section>
   <!-- //about breadcrumb -->
   <!-- /about-6-->
-  <section class="w3l-cta4 py-5">
+  <section class="w3l-cta4 py-5" style="background: rgb(201, 191, 179);">
       <div class="container py-lg-5">
         <div class="ab-section text-center">
           <h6 class="sub-title">About Us</h6>
           <h3 class="hny-title">Travel to make memories all around the world.</h3>
-          <p class="py-3 mb-3">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Harum labore sed, veniam nisi sunt laboriosam ducimus, odio
-            aspernatur fugiat minima blanditiis dignissimos.</p>
-            <a href="services.html" class="btn btn-style btn-primary">Read More</a>
+          <p class="py-3 mb-3"><%=result.discription  %>></p>
+            <a href="" class="btn btn-style btn-primary">Read More</a>
         </div>
         <div class="row mt-5">
           <div class="col-md-9 mx-auto">
@@ -91,7 +90,7 @@
   </section>
   <!-- //about-6-->
    <!-- /content-6-->
-   <section class="w3l-content-6 py-5">
+   <!--<section class="w3l-content-6 py-5">
     <div class="container py-lg-5">
       <div class="row">
         <div class="col-lg-6 content-6-left pr-lg-5">
@@ -107,19 +106,24 @@
         </div>
       </div>
     </div>
-</section>
+</section>-->
 <!-- //content-6-->
-<section class="w3l-grids1">
+<section class="w3l-grids1" style="background-color: beige;">
   <div class="hny-three-grids py-5">
     <div class="container py-lg-5">
+      <h1 style="color: black;">Bus photos</h1>
       <div class="row">
+        
         <div class="col-md-4 col-sm-6 mt-0 grids5-info">
-          <a href="#url"><img src="assets/images/g1.jpg" class="img-fluid" alt=""></a>
+          <% result.busphoto.forEach(function(image) { %>
+            <img src="/../<%= image %>" alt="product image">
+          <% }); %>
           <h5>Lorem</h5>
-          <h4><a href="#url">Investor Relations</a></h4>
-          <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam esse? dolores impedit doloremque.</p>
+          <h4><%=result.busname %></h4>
+          <!--<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam esse? dolores impedit doloremque.</p>-->
         </div>
-        <div class="col-md-4 col-sm-6 mt-sm-0 mt-5 grids5-info">
+      
+        <!--<div class="col-md-4 col-sm-6 mt-sm-0 mt-5 grids5-info">
           <a href="#url"><img src="assets/images/g2.jpg" class="img-fluid" alt=""></a>
           <h5>Lorem</h5>
           <h4><a href="#url"> 
@@ -131,13 +135,13 @@
           <h5>Lorem</h5>
           <h4><a href="#url">Customer Care</a></h4>
           <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam esse? dolores impedit doloremque.</p>
-        </div>
+        </div>-->
       </div>
     </div>
   </div>
 </section>
   <!-- stats -->
-  <section class="w3l-statshny py-5" id="stats">
+  <!--<section class="w3l-statshny py-5" id="stats">
     <div class="container py-lg-5 py-md-4">
       <div class="w3-stats-inner-info">
         <div class="row">
@@ -159,7 +163,7 @@
         </div>
       </div>
     </div>
-  </section>
+  </section>-->
   <!-- //stats -->
   <!-- team -->
   <section class="w3l-team" id="team">
@@ -172,7 +176,18 @@
         <div class="row">
           <div class="col-lg-3 col-6 mt-lg-5 mt-4">
             <div class="box16">
-              <a href="#url"><img src="assets/images/team1.jpg" alt="" class="img-fluid" /></a>
+      
+
+              <% if (typeof result.guidephoto !== 'undefined') { %>
+                <% for (var i = 0; i < result.guidephoto.length; i++) { %>
+                  <img src="/../<%= result.guidephoto[i] %>" alt="<%= images[i].altText %>">
+                <% } %>
+              <% } %>
+
+
+              <% result.guidePhoto.forEach(function(image) { %>
+                <img src="/../<%= image %>" alt="product image">
+              <% }); %>
               <div class="box-content">
                 <h3 class="title"><a href="#url">Alexander</a></h3>
                 <span class="post">Description</span>
@@ -191,7 +206,7 @@
               </div>
             </div>
           </div>
-          <div class="col-lg-3 col-6 mt-lg-5 mt-4">
+          <!-- <div class="col-lg-3 col-6 mt-lg-5 mt-4">
             <div class="box16">
               <a href="#url"><img src="assets/images/team2.jpg" alt="" class="img-fluid" /></a>
               <div class="box-content">
@@ -253,10 +268,127 @@
                 </ul>
               </div>
             </div>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
   </section>
+
+  <section class="w3l-content-6 py-5">
+    <div class="container py-lg-5">
+      <div class="row">
+        <div class="col-lg-6 content-6-left pr-lg-5">
+          <h6 class="sub-title">Why Choose Us</h6>
+          <h3 class="hny-title">Life begins at the end of your comfort zone.</h3>
+        </div>
+        <div class="col-lg-6 content-6-right mt-lg-0 mt-4">
+          <p class="mb-3">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Harum labore sed, veniam nisi sunt laboriosam ducimus, odio
+            aspernatur fugiat minima blanditiis dignissimos.</p>
+            <p class="mb-3">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Harum labore sed, veniam nisi sunt laboriosam ducimus, odio
+              aspernatur fugiat minima blanditiis dignissimos.</p>
+              <a href="/booking/<%=result._id%>" class="btn btn-style btn-primary mt-4">Book Now</a>
+        </div>
+      </div>
+    </div>
+</section>
+  
+    <!--booking-->
+    <!--<section class="w3l-statshny py-5" id="stats">
+    <h1> Tourists Reservation Form </h1>
+        <div class="bg-agile">
+      <div class="book-reservation">
+          <form action="/view" method="post">
+              <div class="form-date-w3-agileits">
+                <label><i class="fa fa-user" aria-hidden="true"></i> Name :</label>
+                <input type="text" name="name" placeholder="Your name" required=""/>
+              </div>
+              <div class="form-date-w3-agileits">
+                <label><i class="fa fa-envelope" aria-hidden="true"></i> Email :</label>
+                <input type="email" name="email" placeholder="Your email" required="" />
+              </div>
+               <div class="form-date-w3-agileits">
+                <label><i class="fa fa-calendar" aria-hidden="true"></i> Arrival Date :</label>
+                <input  id="datepicker1" name="arrival" type="text" value="mm/dd/yyyy" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'mm/dd/yyyy';}" required="">
+              </div>
+              
+              <!--<div class="form-time-w3layouts">
+                  <label><i class="fa fa-clock-o" aria-hidden="true"></i> Time :</label>
+                  <input type="text" name="Time" class="timepicker form-control" value="Hrs:Min">	
+              </div>-->
+              <!--<div class="form-date-w3-agileits">
+                <label><i class="fa fa-calendar" aria-hidden="true"></i> Departure Date :</label>
+                <input  id="datepicker2" name="departure" type="text" value="mm/dd/yyyy" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'mm/dd/yyyy';}" required="">
+              </div>
+              <!--<div class="form-time-w3layouts">
+                  <label><i class="fa fa-clock-o" aria-hidden="true"></i> Time :</label>
+                  <input type="text" name="Time" class="timepicker form-control" value="Hrs:Min">	
+              </div>-->
+              <!--<div class="form-left-agileits-w3layouts bottom-w3ls">
+                  <label><i class="fa fa-home" aria-hidden="true"></i> Choose a Room :</label>
+                  <select class="form-control">
+                    <option>Room</option>
+                    <option>Standard Double Room</option>
+                    <option>Standard Family Room</option>
+                    <option>Garden Family Room</option>
+                    <option>Deluxe Double Room</option>
+                    <option>Executive Junior Suite</option>
+                    <option>Maisonette</option>
+                  </select>
+              </div>
+              <div class="form-left-agileits-w3layouts">
+                  <label><i class="fa fa-users" aria-hidden="true"></i> No.of People :</label>
+                  <select class="form-control">
+                    <option>Persons</option>
+                    <option>1 Person</option>
+                    <option>2 People</option>
+                    <option>3 People</option>
+                    <option>4 People</option>
+                    <option>5 People</option>
+                    <option>More</option>
+                  </select>
+              </div>-->
+              <!--<div class="form-date-w3-agileits">
+                <label><i class="fa fa-user" aria-hidden="true"></i> No.of people :</label>
+                <input type="number" name="people" placeholder="no. of people" required=""/>
+              </div>
+              <div class="form-date-w3-agileits">
+                <label><i class="fa fa-user" aria-hidden="true"></i> Phone :</label>
+                <input type="number" name="phone" placeholder="your phone number" required=""/>
+              </div>
+              <div class="clear"> </div>
+              <div class="make">
+                 <a href="/bookingstatus" ><input type="submit" value="Make a Booking"></a>
+              </div>
+          </form>
+        </div>
+       </div>
+      </section>-->
+
+      <div class="image-container">
+        <% for(var i=2; i< result.guidePhoto.length; i++) { %>
+          <img src="/../<%= result.guidePhoto[0] %>" alt="">
+        <% } %>
+      </div>
+      <div class="image-container">
+        <% for(var i=2; i< result.guidePhoto.length; i++) { %>
+          <img src="/../<%= result.guidePhoto[1] %>" alt="">
+        <% } %>
+      </div>
+      <div class="image-container">
+        <% for(var i=2; i< result.guidePhoto.length; i++) { %>
+          <img src="/../<%= result.guidePhoto[2] %>" alt="">
+        <% } %>
+      </div>
+       <!--copyright-->
+          <!--<div class="copy w3ls">
+               <p>Copyright 2017 Tourists Reservation Form . All Rights Reserved  | Design by <a href="http://w3layouts.com/" target="_blank">W3layouts</a> </p>
+              </div>-->
+        <!--//copyright-->
+        
+        
+          
+    
+    </body>
+    
 
   <%- include('../partials/footer.ejs') %>

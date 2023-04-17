@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const Admindata = require('../models/adminmodel');
 const buses = require('../models/addbusmodel');
+const multer = require('../middleware/multer');
 
 
 module.exports={
@@ -67,21 +68,72 @@ module.exports={
     getaddbus:(req,res)=>{
         res.render("admin/addbus")
     },
-    postaddbus:async(req,res)=>{
-        const Bus =new buses({
-            busname:req.body.busname,
-            place:req.body.place,
-            image:req.file.filename,
-        })
-     await Bus.save().then((result)=>{
-        console.log(req.session.admin);
-        console.log(result)
-            res.redirect('/admin')  
-        })
+
+    // postaddbus: async(req,res,next)=>{
+    //     try{
+        
+    //         // req.files.image[0].path = req.files.image[0].path.replace('public\\', "");
+    //         const images = req.files.map((file) => file.path);
+    //         const Bus =new buses({
+    //             busname:req.body.busname,
+    //             title:req.body.title,
+    //             place:req.body.place,
+    //             discription:req.body.discription,
+    //             // image:req.files.image[0],
+    //             busphoto:images,
+    //             // guidephoto:req.files.image[0]
+    
+    //         })
+    //         await Bus.save().then((result)=>{
+    //         console.log(req.session.admin+"session");
+    //         console.log(result+"result")
+    //             res.redirect('/admin')  
+    //         })
+    //     }
+    //     catch(error){
+    //         console.log(error.message)
+    //         next(error)
+    //     }
+    
+    // },
+   
+    postaddbus: async(req,res,next)=>{
+        try{
+
+            const { images1, images2,images3 } = req.files;
+            const images1Array = images1.map(image => image.filename);
+            const images2Array = images2.map(image => image.filename);
+            const images3Array = images3.map(image => image.filename);
+          //  req.body.images = [req.files.image1[0], req.files.image2[0],]
+            // const images = req.files.map((file) => file.path);
+            const Bus =new buses({
+                busname:req.body.busname,
+                title:req.body.title,
+                place:req.body.place,
+                discription:req.body.discription,
+                mainimage:images3Array,
+                busphoto:images1Array,
+                guidePhoto:images2Array,
+                // guidephoto:req.files.image[0]
+    
+            })
+            await Bus.save().then((result)=>{
+            console.log(req.session.admin+"session");
+            console.log(result+"result")
+                res.redirect('/admin')  
+            })
+        }
+        catch(error){
+            console.log(error.message)
+            next(error)
+        }
+    
     },
+
+
     getbusdetails:async(req,res)=>{
         if(req.session.admin){
-        // const admin=req.session.admin
+        // const admin=req.session.admin 
         // console.log(admin,"jjjjjjjjj");
         // const results =  await buses.findOne({_id:admin})
         // console.log(results);
@@ -90,5 +142,60 @@ module.exports={
         }else{
             res.redirect('/admin')
         }
-    }
+    },
+    geteditbus:async(req,res)=>{
+        try{
+            if(req.session.admin){
+                // const adminid=req.session.admin
+                // const adminedit=await buses.findOne({_id:adminid})
+                const edid=req.params.id;
+                console.log(edid,"v")
+               await buses.findOne({_id:edid}).then((editdoc)=>{
+                    res.render("admin/editbus",{editdoc})
+
+                })
+            }else{
+                res.redirect("/admin/adminlogin")
+
+                }
+                
+
+            }catch(error){
+                console.log(error)
+            }
+        },
+        posteditbus:async(req,res)=>{
+            try{
+                const edid1=req.params.id;
+                const busname=req.body.busname;
+                const place=req.body.place;
+                const image=req.file.filename;
+
+                await buses.updateOne({_id:edid1},
+                    {
+                        $set:{
+                            busname:busname,
+                            place:place,
+                            image:image,
+                        }
+                    })
+                    .then((result)=>{
+                        console.log(result)
+                        res.redirect('/')
+
+                    })
+            }catch(error){
+                console.log(error)
+                
+            }
+        },
+        getdeletebus:async(req,res)=>{
+            const deletebus=req.params.id
+            const del=await buses.deleteOne({_id:deletebus})
+            console.log(del,'deleted')
+            res.redirect('/admin/busdetails')
+        },
+        
+
+
 }

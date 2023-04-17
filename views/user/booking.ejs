@@ -1,0 +1,73 @@
+<section class="w3l-statshny py-5" id="stats" style="background-color: antiquewhite;">
+    <h1> Tourists Reservation Form </h1>
+        <div class="bg-agile">
+      <div class="book-reservation">
+          <form action="/booking/<%=result._id%>" method="post">
+              <div class="form-date-w3-agileits">
+                <label><i class="fa fa-user" aria-hidden="true"></i> Name :</label>
+                <input type="text" name="name" placeholder="Your name" required=""/>
+              </div>
+              <div class="form-date-w3-agileits">
+                <label><i class="fa fa-envelope" aria-hidden="true"></i> Email :</label>
+                <input type="email" name="email" placeholder="Your email" required="" />
+              </div>
+               <div class="form-date-w3-agileits">
+                <label><i class="fa fa-calendar" aria-hidden="true"></i> Arrival Date :</label>
+                <input  id="datepicker1" name="arrival" type="text" value="mm/dd/yyyy" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'mm/dd/yyyy';}" required="">
+              </div>
+              
+              <!--<div class="form-time-w3layouts">
+                  <label><i class="fa fa-clock-o" aria-hidden="true"></i> Time :</label>
+                  <input type="text" name="Time" class="timepicker form-control" value="Hrs:Min">	
+              </div>-->
+              <div class="form-date-w3-agileits">
+                <label><i class="fa fa-calendar" aria-hidden="true"></i> Departure Date :</label>
+                <input  id="datepicker2" name="departure" type="text" value="mm/dd/yyyy" onfocus="this.value = '';" onblur="if (this.value == '') {this.value = 'mm/dd/yyyy';}" required="">
+              </div>
+              <!--<div class="form-time-w3layouts">
+                  <label><i class="fa fa-clock-o" aria-hidden="true"></i> Time :</label>
+                  <input type="text" name="Time" class="timepicker form-control" value="Hrs:Min">	
+              </div>-->
+              <!--<div class="form-left-agileits-w3layouts bottom-w3ls">
+                  <label><i class="fa fa-home" aria-hidden="true"></i> Choose a Room :</label>
+                  <select class="form-control">
+                    <option>Room</option>
+                    <option>Standard Double Room</option>
+                    <option>Standard Family Room</option>
+                    <option>Garden Family Room</option>
+                    <option>Deluxe Double Room</option>
+                    <option>Executive Junior Suite</option>
+                    <option>Maisonette</option>
+                  </select>
+              </div>
+              <div class="form-left-agileits-w3layouts">
+                  <label><i class="fa fa-users" aria-hidden="true"></i> No.of People :</label>
+                  <select class="form-control">
+                    <option>Persons</option>
+                    <option>1 Person</option>
+                    <option>2 People</option>
+                    <option>3 People</option>
+                    <option>4 People</option>
+                    <option>5 People</option>
+                    <option>More</option>
+                  </select>
+              </div>-->
+              <div class="form-date-w3-agileits">
+                <label><i class="fa fa-user" aria-hidden="true"></i> No.of people :</label>
+                <input type="number" name="people" placeholder="no. of people" required=""/>
+              </div>
+              <div class="form-date-w3-agileits">
+                <label><i class="fa fa-user" aria-hidden="true"></i> Phone :</label>
+                <input type="number" name="phone" placeholder="your phone number" required=""/>
+              </div>
+              <div class="clear"> </div>
+              <div class="make">
+                 <!-- <a href="/bookingstatus" > -->
+                    <input type="submit" value="Make a Booking">
+              </div>
+          </form>
+        </div>
+       </div>
+      </section>
+
+         
