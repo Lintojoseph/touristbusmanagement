@@ -2,7 +2,19 @@ const bcrypt = require('bcrypt');
 const Admindata = require('../models/adminmodel');
 const buses = require('../models/addbusmodel');
 const multer = require('../middleware/multer');
+const bookings = require('../models/booking');
+const nodemailer = require('nodemailer');
+const order = require('../models/statusmodel');
+const mongoose = require('mongoose');
 
+const transporter = nodemailer.createTransport({
+    host: "smtp.gmail.com",
+    port: 587,
+    auth: {
+        user: process.env.Email,
+        pass: process.env.Pass
+    }
+})
 
 module.exports={
     getadminpanel:(req,res)=>{
@@ -195,7 +207,137 @@ module.exports={
             console.log(del,'deleted')
             res.redirect('/admin/busdetails')
         },
-        
+        getbookstatus:async(req,res)=>{
+            try{
+                // console.log('hiii')
+                // bookid=req.params.id
+                // console.log(bookid)
+                // await bookings.findById(bookid,{$set:{status:"accepted"}},{new:true})
+                // res.json({ message: "Booking status updated successfully" });
+                const allBook=await bookings.find()
+                
+                res.render('admin/bookstatus',{allBook})
+            }
+            
+         catch (error) {
+            console.log(error);
+            res.status(500).send("An error occurred");
+          }
+        },
+        deletebook:async(req,res)=>{
+            try{
+                let bookId=req.params.id
+                await bookings.deleteOne({_id:bookId}).then(result=>{
+                    console.log(result,'result')
+                    res.redirect('/admin/bookstatus')
+                })
+            }
+            catch(error){
+                res.redirect('/404')
+            }
+        },
+        getacceptbook:async(req,res)=>{
+            try{
+                let bookId=req.params.id
+                const resp=await bookings.findOneAndUpdate({_id:bookId},{$set:{status:true}},{new:true})
+                console.log(resp,'hiiii')
+                res.redirect('/admin/bookstatus')
 
+              await  transporter.sendMail({
+                    to:resp.email,
+                    from:process.env.Email,
+                    subject:'Pay to place Book bus',
+                    html:`<h3>To book your Bus Completely  <a href=http://localhost:${process.env.APP_URL}/payment/${resp._id}>Click here</a>  to Pay and get Bus</h3>`
+                })
+                   
+            }catch(error){
+                console.log(error)
+                res.redirect('/404')
+            }
+        },
+        getbookedlist:async(req,res)=>{
+            try{
+                
+                const list=await order.find()
+                res.render('admin/paymentstatus',{list})
+            }catch(error){
+                res.redirect('/404')
+            }
 
+        },
+        logout:async(req,res)=>{
+            req.session.admin=false
+            res.redirect('/admin')
+        },
+        adminforgetpassword:(req,res)=>{
+            res.render('admin/adminforgetpassword')
+         },
+         postadminforgetpassword: async (req, res) => {
+            try {
+              const email = req.body.email;
+              console.log('Email:', email);
+
+              const admins = await Admindata.findOne({ email: email });
+              console.log(admins, 'llll');
+          
+              if (admins) {
+                await transporter.sendMail({
+                  to: admins.email,
+                  from: process.env.user,
+                  subject: 'Password Reset',
+                  html: `<h4>To reset Your Password <a href="http://localhost:${process.env.APP_URL}/admin/adminresetpassword/${admins._id}">Click Here</a>`
+                });
+          
+                res.redirect('/admin/adminlogin');
+              } else {
+                res.redirect('/admin/adminforgetpassword');
+              }
+            } catch (error) {
+              console.log(error);
+              res.redirect('/404error');
+            }
+          },
+          
+          
+        getadminresetpassword:async(req,res)=>{
+            try {
+                const authId = req.params.id
+            console.log(authId,"authrrrrrrrrr")
+            await Admindata.findOne({_id:authId}).then(auth=>{
+                res.render('admin/adminresetpassword',{auth});
+            })
+            } catch (error) {
+                console.log(error);
+                res.redirect('/404error')
+            }
+            
+            
+        }, 
+        postresetpassword:async(req,res)=>{
+            try {
+                const auth = req.body.userid
+                const pass =req.body.password
+                const hash  = await bcrypt.hash(pass,10)
+                const user = await Admindata.findOne({_id:auth})
+                await Admindata.updateOne({_id:auth},{$set:{password:hash}},{new:true}).then(result=>{
+                  console.log(result,"password update");
+                  res.redirect('/admin/adminlogin');
+                  transporter.sendMail({
+                    to:[user.email],
+                    from:process.env.user,
+                    subject:'Status Of reset Password',
+                    html:`<h2>Your Password Is Successfully Updated</h2>`   
+                  })
+                })
+            } catch (error) {
+                console.log(error);
+                res.redirect('/404error');
+            }
+           
+        },  
+        logout:async(req,res)=>{
+            req.session.user=null
+            res.redirect('/admin')
+        }             
+    
 }

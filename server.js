@@ -35,7 +35,7 @@ app.use(session({
 app.use('/',userRouter)
 app.use('/admin',adminRouter)
 
-const PORT=process.env.PORT || 4000
+const PORT=process.env.APP_URL || 4000
 
 mongoose.connect(process.env.DB_URL)
 const db=mongoose.connection;

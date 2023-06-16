@@ -1,19 +1,54 @@
-
-  
-
 <div class="card col-md-12 mx-3 mb-4">
-    <h4 class="text-center mt-3">Booking  Status</h4><hr>
-     <div class="card-body">
-       <h6 class="card-title">NAME:<%=books.name %> </h6>
-       <h6 class="card-title">EMAIL:<%= books.email %> </h6>
-       <h6 class="card-title">Departure:<%= books.departure %> </h6>
-       <h6 class="card-title">Arrival:<%= books.arrival %> </h6>
-       <h6 class="card-title">No.of people:<%= books.peoples %> </h6>
-       <h6 class="card-title">PHONE:<%= books.phone %> </h6>
-       
-       <br>
-       <button class="text-success fw-bold" style="font-family: fantasy;">Request for payments</button>
-      
-     </div>
-   </div>
-   
+  <h4 class="text-center mt-3">Booking Status</h4>
+  <hr>
+  <div class="card-body">
+    <h2 class="text-center booking-title">Booking for <%= books.user.busname %></h2>
+
+    <div class="booking-details">
+      <h6 class="booking-label">Name:</h6>
+      <p class="booking-value"><%= books.name %></p>
+      <h6 class="booking-label">Email:</h6>
+      <p class="booking-value"><%= books.email %></p>
+      <h6 class="booking-label">Departure:</h6>
+      <p class="booking-value"><%= books.departure %></p>
+      <h6 class="booking-label">Arrival:</h6>
+      <p class="booking-value"><%= books.arrival %></p>
+      <h6 class="booking-label">No. of People:</h6>
+      <p class="booking-value"><%= books.peoples %></p>
+      <h6 class="booking-label">Phone:</h6>
+      <p class="booking-value"><%= books.phone %></p>
+    </div>
+
+    <p class="booking-message">Please wait for payment in your email</p>
+  </div>
+</div>
+<style>
+  .booking-title {
+  font-size: 24px;
+  font-weight: bold;
+  color: #333;
+}
+
+.booking-details {
+  margin-top: 20px;
+}
+
+.booking-label {
+  font-size: 14px;
+  font-weight: bold;
+  color: #666;
+}
+
+.booking-value {
+  font-size: 16px;
+  color: #333;
+}
+
+.booking-message {
+  font-size: 18px;
+  font-style: italic;
+  color: #228B22;
+  margin-top: 20px;
+}
+
+</style>

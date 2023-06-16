@@ -59,7 +59,7 @@
           <!--//row-grids-->
             <!--/row-grids-->
         <% result.forEach(el=>{ %>
-        <div class="col-lg-6 subject-card mt-4">
+        <div class="col-md-4 subject-card mt-4">
           <div class="subject-card-header p-4">
             <a href="#" class="card_title p-lg-4d-block">
               <div class="row align-items-center">
@@ -68,12 +68,12 @@
                   <img src="/public/images/bus-pictures/<%=el.mainimage  %> %>" class="img-fluid" alt="">
                 </div>
                 <% el.mainimage.forEach(function(image) { %>
-                  <img src="<%= image %>" alt="product image">
+                  <img src="<%= image %>" alt="product image" style="height: 300px;">
                 <% }); %>
               
 
              
-                <div class="col-sm-7 subject-content mt-sm-0 mt-4">
+                <div class="col-sm-7 subject-content mt-sm-0 mt-4" style="width: 90%;">
                   <h4><%=el.busname %></h4>
                   <!--<p>3Days, 4 Nights</p>-->
                   <div class="dst-btm">

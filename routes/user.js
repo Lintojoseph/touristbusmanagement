@@ -12,7 +12,18 @@ const {
     getbookingstatus,
     getverify,
     getbooking,
-    postotpverify
+    postotpverify,
+    getpayment,
+    postpayment,
+    verifypayment,
+    success,
+    forgetpassword,
+    postforgetpassword,
+    getresetPassword,
+    postresetpassword,
+    logout,
+    getcontact
+    // error
 } = require('../controllers/userController')
 
 
@@ -28,5 +39,16 @@ router.post('/booking/:id',postbooking)
 router.get('/bookingstatus/:id',getbookingstatus)
 router.get('/verify',getverify)
 router.post('/otpverify',postotpverify)
+router.get('/payment/:id',getpayment)
+router.put('/payment',postpayment)
+router.put('/verify-payment',verifypayment)
+router.get('/success',success)
+router.get('/forgetpassword',forgetpassword)
+router.post('/forgetpassword',postforgetpassword)
+router.get('/resetPassword/:id',getresetPassword)
+router.post('/resetPassword',postresetpassword)
+router.get('/logout',logout)
+router.get('/contact',getcontact)
+// router.get('/404error',error)
 
 module.exports=router

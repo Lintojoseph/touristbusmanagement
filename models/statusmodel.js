@@ -14,10 +14,14 @@ const statusSchema=new mongoose.Schema({
         type:Number,
         required:true
     }, 
-    place:{
-        type:String,
-        required:true
-    },
+    paymentDate: {
+        type: Date,
+        // default: Date.now()
+      },
+    // place:{
+    //     type:String,
+    //     required:true
+    // },
     paymentMethod: String,
     orderStatus: String,
 })

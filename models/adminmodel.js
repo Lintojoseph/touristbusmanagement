@@ -10,13 +10,18 @@ const adminSchema= new mongoose.Schema({
     email:{
         type:String,
         required:true,
+        
     },
     
     
     password:{
         type: String,
         required: true,
-    }
+    },
+    confirmpassword:{
+      type:String,
+      required:true
+  }
 })
 adminSchema.pre('save', function(next) {
     const admin = this;
@@ -40,5 +45,4 @@ adminSchema.pre('save', function(next) {
     });
   });
 
-const Admindata=mongoose.model("admin", adminSchema);
-module.exports =Admindata;
+  module.exports=mongoose.model("admin", adminSchema);

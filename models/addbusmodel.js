@@ -3,18 +3,18 @@ const mongoose=require('mongoose')
 const addbusSchema= new mongoose.Schema({
     busname:{
         type: String,
-        required:true
+        // required:true
     },
     title:{
         type:String,
-        required:true
+        // required:true
 
     },
     
    
     place:{
         type:String,
-        required:true
+        // required:true
         
     },
     discription:{

@@ -1,6 +1,6 @@
 <header id="site-header" class="fixed-top">
     <div class="container">
-      <nav class="navbar navbar-expand-lg stroke">
+      <nav class="navbar navbar-expand-lg stroke" style="padding-top: 0px;">
         <h1><a class="navbar-brand mr-lg-5"  href="">
           <%= result.busname %>
           </a></h1>
@@ -78,8 +78,8 @@
         <div class="ab-section text-center">
           <h6 class="sub-title">About Us</h6>
           <h3 class="hny-title">Travel to make memories all around the world.</h3>
-          <p class="py-3 mb-3"><%=result.discription  %>></p>
-            <a href="" class="btn btn-style btn-primary">Read More</a>
+          <p class="py-3 mb-3"><%=result.discription  %></p>
+            <!-- <a href="" class="btn btn-style btn-primary">Read More</a> -->
         </div>
         <div class="row mt-5">
           <div class="col-md-9 mx-auto">
@@ -112,16 +112,21 @@
   <div class="hny-three-grids py-5">
     <div class="container py-lg-5">
       <h1 style="color: black;">Bus photos</h1>
-      <div class="row">
-        
-        <div class="col-md-4 col-sm-6 mt-0 grids5-info">
-          <% result.busphoto.forEach(function(image) { %>
-            <img src="/../<%= image %>" alt="product image">
-          <% }); %>
-          <h5>Lorem</h5>
-          <h4><%=result.busname %></h4>
+      
+        <div>
+          <!-- <h5>Lorem</h5>
+          <h4><%= result.busname %></h4> -->
+          <div class="row">
+            <% result.busphoto.forEach(function(image) { %>
+              <div class="col-4 col-sm-4">
+                <img src="/../<%= image %>" alt="product image" class="img-fluid" style="width: 100%; height: 300px; object-fit: cover;">
+              </div>
+            <% }); %>
+          </div>
           <!--<p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam esse? dolores impedit doloremque.</p>-->
         </div>
+      
+      
       
         <!--<div class="col-md-4 col-sm-6 mt-sm-0 mt-5 grids5-info">
           <a href="#url"><img src="assets/images/g2.jpg" class="img-fluid" alt=""></a>
@@ -136,7 +141,7 @@
           <h4><a href="#url">Customer Care</a></h4>
           <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Veniam esse? dolores impedit doloremque.</p>
         </div>-->
-      </div>
+      
     </div>
   </div>
 </section>
@@ -278,14 +283,12 @@
     <div class="container py-lg-5">
       <div class="row">
         <div class="col-lg-6 content-6-left pr-lg-5">
-          <h6 class="sub-title">Why Choose Us</h6>
-          <h3 class="hny-title">Life begins at the end of your comfort zone.</h3>
+          <h6 class="sub-title">Let's go</h6>
+          <h3 class="hny-title">Life is short and the world is wide. Better get started.</h3>
         </div>
         <div class="col-lg-6 content-6-right mt-lg-0 mt-4">
-          <p class="mb-3">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Harum labore sed, veniam nisi sunt laboriosam ducimus, odio
-            aspernatur fugiat minima blanditiis dignissimos.</p>
-            <p class="mb-3">Lorem, ipsum dolor sit amet consectetur adipisicing elit. Harum labore sed, veniam nisi sunt laboriosam ducimus, odio
-              aspernatur fugiat minima blanditiis dignissimos.</p>
+          <p class="mb-3">A spontaneous and unplanned journey where the traveller leaves their life behind allows themselves to be guided by the landscape and architecture.</p>
+            <p class="mb-3">The awareness of how little of the world you’ll experience. The frustration of being stuck in just one body that inhabits only one place at a time.</p>
               <a href="/booking/<%=result._id%>" class="btn btn-style btn-primary mt-4">Book Now</a>
         </div>
       </div>
@@ -364,7 +367,7 @@
        </div>
       </section>-->
 
-      <div class="image-container">
+      <!-- <div class="image-container">
         <% for(var i=2; i< result.guidePhoto.length; i++) { %>
           <img src="/../<%= result.guidePhoto[0] %>" alt="">
         <% } %>
@@ -378,7 +381,7 @@
         <% for(var i=2; i< result.guidePhoto.length; i++) { %>
           <img src="/../<%= result.guidePhoto[2] %>" alt="">
         <% } %>
-      </div>
+      </div> -->
        <!--copyright-->
           <!--<div class="copy w3ls">
                <p>Copyright 2017 Tourists Reservation Form . All Rights Reserved  | Design by <a href="http://w3layouts.com/" target="_blank">W3layouts</a> </p>

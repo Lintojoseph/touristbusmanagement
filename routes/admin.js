@@ -16,6 +16,16 @@ const {
     geteditbus,
     posteditbus,
     getdeletebus,
+    getbookstatus,
+    deletebook,
+    getacceptbook,
+    getbookedlist,
+    logout,
+    adminforgetpassword,
+    postadminforgetpassword,
+    getadminresetpassword,
+    postresetpassword,
+    
     
 
 
@@ -32,9 +42,15 @@ router.get('/busdetails',getbusdetails)
 router.get('/editbus/:id',geteditbus)
 router.post('/editbus/:id',uploadbus.single('image'),posteditbus)
 router.get('/deletebus/:id',getdeletebus)
-
-
-
+router.get('/bookstatus',getbookstatus)
+router.get('/deletebook/:id',deletebook)
+router.get('/acceptbook/:id',getacceptbook)
+router.get('/paymentstatus',getbookedlist)
+router.get('/logout',logout)
+router.get('/adminforgetpassword',adminforgetpassword)
+router.post('/adminforgetpassword',postadminforgetpassword)
+router.get('/adminresetpassword/:id',getadminresetpassword)
+router.post('/adminresetpassword',postresetpassword)
 
 
 module.exports=router

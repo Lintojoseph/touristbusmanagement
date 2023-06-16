@@ -5,12 +5,34 @@
 		<form action="/admin/adminlogin" method="post">
 			<input type="email" class="ggg" name="email" placeholder="E-MAIL" required="">
 			<input type="password" class="ggg" name="password" placeholder="PASSWORD" required="">
-			<span><input type="checkbox" />Remember Me</span>
-			<h6><a href="#">Forgot Password?</a></h6>
+			<!-- <span><input type="checkbox" />Remember Me</span> -->
+			<h6><a href="/admin/adminforgetpassword">Forgot Password?</a></h6>
 				<div class="text-center"></div>
 				<!-- <input type="submit"  name="login"> -->
-				<button type="submit" class="btn btn-danger">Login</button>
+				<div class="button-container">
+					<button type="submit" class="btn btn-danger">Login</button>
+				  </div>
+				  
 		</form>
 		<p>Don't Have an Account ?<a href="/admin/adminregister">Create an account</a></p>
 </div>
 </div>
+<style>
+	.button-container {
+	  padding-left: 110px;
+	}
+	
+	@media (max-width: 768px) {
+	  .button-container {
+		padding-left: 10px; /* Adjust the value as needed */
+	  }
+	}
+	
+	.btn {
+	  width: 50%; /* Take up full width of the container */
+	  max-width: 200px; /* Set a maximum width for the button */
+	  margin: 0 auto; /* Center the button horizontally */
+	  display: block; /* Ensure the button is a block element */
+	}
+  </style>
+  

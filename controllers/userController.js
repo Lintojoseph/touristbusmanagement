@@ -4,9 +4,11 @@ const buses = require('../models/addbusmodel');
 const bookings = require('../models/booking');
 const mongoose = require('mongoose');
 const nodemailer = require('nodemailer');
-const usermodel = require('../models/usermodel');
+// const usermodel = require('../models/usermodel');
 const {isValidDate} = require('../middleware/bookingdate');
-
+const order = require('../models/statusmodel');
+const userHelpers = require('../helpers/userDatabase');
+const moment = require('moment');
 
 
 const transporter = nodemailer.createTransport({
@@ -33,13 +35,14 @@ module.exports = {
         res.render('user/location')
     },
     getview: async (req, res) => {
-
+            console.log(req.params.id);
+            console.log(req.session.user);
         if (req.session.user) {
             let id = req.params.id
-            await buses.findById(id).then(result => {
+          const result =  await buses.findById(id)
                 console.log(result)
                 res.render('user/view', { result })
-            })
+            
 
         }
         else {
@@ -47,6 +50,7 @@ module.exports = {
         }
 
     },
+
     getlogin: (req, res) => {
 
         // if(req.session.logg)
@@ -239,8 +243,9 @@ module.exports = {
     postbooking: async(req, res) =>{
         try{
             
-            console.log(req.body);
-            const userId = req.params.id
+            console.log(req.params,"lin");
+            const busid = req.params.id
+            
             const username=req.body.name
             const useremail=req.body.email
             const userarrival=req.body.arrival
@@ -258,7 +263,7 @@ module.exports = {
             }
 
             const userbooking=await new bookings({
-                            user:userId,
+                            user:busid,
                             name:username,
                             email:useremail,
                             arrival:userarrival,
@@ -275,18 +280,18 @@ module.exports = {
         }
     },
     getbookingstatus: async (req, res) => {
-        //if(req.session.user){
-        // const admin=req.session.admin 
-        // console.log(admin,"jjjjjjjjj");
-        // const results =  await buses.findOne({_id:admin})
-        // console.log(results);
+       
 
         const status = req.params.id
-        console.log(status, 'statusss')
-        const books = await bookings.findOne({ _id: status })
-        // console.log(resu);
+        console.log(status, 'statusss bus id----------')
+        //const userId = await bookings.find().populate('user')
+        const books = await bookings.findById(status).populate('user')
+
+        // const books = await bookings.
+        console.log(books," user")
+        // console.log(resu);<h3>Booking For <%=userId.json().user.busname %></h3>
         //  .then(books=>{
-        res.render('user/bookingstatus', { books })
+        res.render('user/bookingstatus', {books})
         // res.redirect(`/bookingstatus/${books}`)
 
         //  })
@@ -304,23 +309,8 @@ module.exports = {
 
 
     },
-    //     try {
-
-
-    //       // Validate that the userid is a valid MongoDB ObjectID
-    //         const userId = req.params.id;
-    //         console.log(userId);
-    //         await bookings.findOne({_id: userId}).then(books => {
-    //         res.render('user/bookingstatus', { books });
-    //         console.log(books);
-    //         })
-
-
-    //     } catch (error) {
-    //       console.log(error);
-    //       res.status(500).send('Internal server error');
-    //     }
-    //   },
+    
+    
     getverify: (req, res) => {
         try {
             const { name, email, password, confirmPassword, token } = req.session.signup;
@@ -363,5 +353,149 @@ module.exports = {
         }
 
     },
+    getpayment: async (req, res) => {
+        try {
+          const pId = req.params.id;
+      
+          const result = await bookings.findOne({ _id: pId });
+          console.log(result, 'result');
+          res.render('user/payment', { result });
+        } catch (error) {
+          console.log(error);
+        }
+      },
+    postpayment:async(req,res)=>{
+        try{
+            const status = req.body['payment-method'] ==='COC'?'placed':'pending'
+            
+            const today = new Date();
+            const paymentDate = today.toISOString().slice(0, 10);
+            console.log(paymentDate);
+            if (!paymentDate) {
+             // Handle invalid date value
+             console.error('Invalid date value');
+            // Return an error response or redirect as per your requirement
+                return res.status(400).json({ error: 'Invalid date value' });
+            }
+        
 
+            const bookpay=new order({
+                user_Id:req.body.userId,
+                name:req.body.name,
+                ph:req.body.phone,
+                paymentDate:paymentDate,
+                // place:req.body.place,
+                paymentMethod:req.body['payment-method'],
+                orderStatus:status
+
+            })
+            await bookpay.save().then(result=>{
+                console.log(result,'payyyy')
+                if(req.body['payment-method']==='COC'){
+                    res.json({codeSucess:true})
+                }else{
+                    userHelpers.generateOrder(result).then((response)=>{
+                        console.log(response,"diiiiiiiiiiiiiiiiiiii");
+                         res.json({response})
+                    })
+                    
+
+                }
+                console.log(bookpay,'booking completed');
+            })
+        }catch (error) {
+            console.log(error);
+            res.redirect('/404error'); 
+         }   
+    },
+    verifypayment:(req,res,next)=>{
+        console.log(req.body);
+            try{
+                userHelpers.paymentVerify(req.body).then(async()=>{
+                    const id1 = req.body['order[receipt]']
+                    await order.findOneAndUpdate({_id:id1},{
+                        $set:{orderStatus:'Booked'}
+                    })  
+                })    
+        }catch(error){
+            next(new Error(error))
+            res.redirect('/404')
+        }  
+    },
+    success:(req,res)=>{
+        try{
+            res.render('user/success',{user:false})
+        }catch(err){
+            console.log(err);
+            res.redirect('/404')
+        }
+     }, 
+     forgetpassword:(req,res)=>{
+        res.render('user/forgetpassword',{user:false,login:false})
+     },
+     postforgetpassword:async(req,res)=>{
+        try {
+            const email = req.body.email
+            await Userdata.findOne({email:email}).then(users=>{
+                if(users){
+                    res.redirect('/')
+                    transporter.sendMail({
+                        to:[users.email],
+                        from: process.env.user,
+                        subject:'Password Reset',
+                        html:`<h4>To reset Your Password <a href="http://localhost:${process.env.APP_URL}/resetPassword/${users._id}">Click Here</a>`
+                    })  
+                }else{
+                    res.redirect('/forgetpassword')
+                }
+            })
+        } catch (error) {
+            console.log(error);
+             res.redirect('/404error')
+        }
+       
+    }, 
+    getresetPassword:async(req,res)=>{
+        try {
+            const authId = req.params.id
+        console.log(authId,"authrrrrrrrrr")
+        await Userdata.findOne({_id:authId}).then(auth=>{
+            res.render('user/resetPassword',{auth});
+        })
+        } catch (error) {
+            console.log(error);
+            res.redirect('/404error')
+        }
+        
+        
+    }, 
+    postresetpassword:async(req,res)=>{
+        try {
+            const auth = req.body.userid
+            const pass =req.body.password
+            const hash  = await bcrypt.hash(pass,10)
+            const user = await usermodel.findOne({_id:auth})
+            await Userdata.updateOne({_id:auth},{$set:{password:hash}},{new:true}).then(result=>{
+              console.log(result,"password update");
+              res.redirect('/login');
+              transporter.sendMail({
+                to:[user.email],
+                from:process.env.user,
+                subject:'Status Of reset Password',
+                html:`<h2>Your Password Is Successfully Updated</h2>`   
+              })
+            })
+        } catch (error) {
+            console.log(error);
+            res.redirect('/404error');
+        }
+       
+    },  
+    logout:async(req,res)=>{
+        req.session.user=null
+        res.redirect('/')
+    },
+    getcontact:(req,res)=>{
+        res.render('user/contact')
+    }        
 }

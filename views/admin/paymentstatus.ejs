@@ -1,0 +1,34 @@
+<div class="table-responsive">
+    <table class="table table-striped">
+      <thead>
+        <tr>
+          
+          <th>User ID</th>
+          <th>User Name</th>
+          <th>Payment Date</th>
+          <th>Payment status</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% list.forEach(el=>{ %>
+
+        
+        <tr>
+          <td><%= el.user_Id  %></td>
+          
+          <td><%= el.name  %></td>
+          <td><%= el.paymentDate %></td>
+          <td><%= el.orderStatus  %></td>
+        </tr>
+        <% }) %>
+      </tbody>
+    </table>
+  </div>
+  
+
+  <script>
+    const currentDate = new Date();
+    const formattedDate = currentDate.toLocaleDateString();
+    console.log(formattedDate);
+
+  </script>

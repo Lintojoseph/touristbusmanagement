@@ -1,37 +1,41 @@
 const mongoose=require('mongoose')
 
 const bookingSchema=new mongoose.Schema({
-    // user:{
-    //     type:String,
-    //     ref:'user',
-    //     required:true
+    user:{
+        type:String,
+        ref:'bus',
+        // required:true
 
-    // },
-
+    },
+      
     name:{
         type:String,
         //required:true
     },
     email:{
         type:String,
-        required:true
+        // required:true
     },
     arrival:{
         type:String,
-        required:true
+        // required:true
 
     },
     departure:{
         type:String,
-        required:true
+        // required:true
     },
     peoples:{
         type:String,
-        required:true
+        // required:true
     },
     phone:{
         type:String,
-        required:true
+        // required:true
+    },
+    status:{
+        type:Boolean,
+        default:false
     }
 
 
